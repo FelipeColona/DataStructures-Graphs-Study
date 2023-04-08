@@ -1,0 +1,98 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct Node{
+  int value;
+  struct Node *nextNode;
+} Node;
+
+void add(Node *head, int value){
+  Node *currentNode = head;  
+  while (currentNode->nextNode != NULL) {
+    currentNode = currentNode->nextNode;
+  }
+  currentNode->nextNode = malloc(sizeof(Node));
+  currentNode->nextNode->value = value;
+  currentNode->nextNode->nextNode = NULL;
+}
+
+
+Node pop(Node *head){
+  Node *newHead = head->nextNode;
+  free(head);
+
+  return *newHead;
+}
+
+Node removeByIndex(Node *head, int index){
+  if(index == 0){
+    return pop(head);
+  } else {
+    Node *currentNode = head;  
+    int i = 0;
+    while(i < index - 1 && currentNode->nextNode != NULL){
+      currentNode = currentNode->nextNode;
+      i++;
+    }
+    Node *temp = currentNode->nextNode;
+    currentNode->nextNode = currentNode->nextNode->nextNode;
+    free(temp);
+  }
+
+  return *head;
+}
+
+
+Node get(Node *head, int index){
+  Node *currentNode = head;
+
+  int i = 0;
+  while(i < index && currentNode->nextNode != NULL){
+    currentNode = currentNode->nextNode;
+    i++;
+  }
+  return *currentNode;
+}
+
+void printLinkedList(Node *node){
+  Node *currentNode = node;  
+  while (currentNode != NULL) {
+    printf("%d \n", currentNode->value);
+    currentNode = currentNode->nextNode;
+  }
+}
+
+int length(Node *head){
+  Node *currentNode = head;
+
+  int i = 0;
+  while(currentNode != NULL){
+    currentNode = currentNode->nextNode;
+    i++;
+  }
+  return i;
+}
+
+int main(){
+  Node *node1 = malloc(sizeof(Node));
+  Node *node2 = malloc(sizeof(Node));
+  Node *node3 = malloc(sizeof(Node));
+  *node1 = (Node) {.value = 1, .nextNode = node2};
+  *node2 = (Node) {.value = 2, .nextNode = node3};
+  *node3 = (Node) {.value = 3, .nextNode = NULL};
+
+  add(node1, 4);
+  add(node1, 5);
+  add(node1, 6);
+  add(node1, 7);
+
+  //removeByIndex(node1, 2);
+  //Node head = pop(node1);
+  int len = length(node1);
+  removeByIndex(node1, len - 1);
+  printLinkedList(node1);
+
+  return 0;
+}
+
+
