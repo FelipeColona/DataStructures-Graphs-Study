@@ -1,10 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-
-typedef struct Node{
-  int value;
-  struct Node *nextNode;
-} Node;
+#include "LinkedList.h"
 
 void add(Node *head, int value){
   Node *currentNode = head;  
@@ -17,14 +13,14 @@ void add(Node *head, int value){
 }
 
 
-Node pop(Node *head){
+Node* pop(Node *head){
   Node *newHead = head->nextNode;
   free(head);
 
-  return *newHead;
+  return newHead;
 }
 
-Node removeByIndex(Node *head, int index){
+Node* removeByIndex(Node *head, int index){
   if(index == 0){
     return pop(head);
   } else {
@@ -39,11 +35,11 @@ Node removeByIndex(Node *head, int index){
     free(temp);
   }
 
-  return *head;
+  return head;
 }
 
 
-Node get(Node *head, int index){
+Node* get(Node *head, int index){
   Node *currentNode = head;
 
   int i = 0;
@@ -51,7 +47,7 @@ Node get(Node *head, int index){
     currentNode = currentNode->nextNode;
     i++;
   }
-  return *currentNode;
+  return currentNode;
 }
 
 void printLinkedList(Node *node){
@@ -72,27 +68,3 @@ int length(Node *head){
   }
   return i;
 }
-
-int main(){
-  Node *node1 = malloc(sizeof(Node));
-  Node *node2 = malloc(sizeof(Node));
-  Node *node3 = malloc(sizeof(Node));
-  *node1 = (Node) {.value = 1, .nextNode = node2};
-  *node2 = (Node) {.value = 2, .nextNode = node3};
-  *node3 = (Node) {.value = 3, .nextNode = NULL};
-
-  add(node1, 4);
-  add(node1, 5);
-  add(node1, 6);
-  add(node1, 7);
-
-  //removeByIndex(node1, 2);
-  //Node head = pop(node1);
-  int len = length(node1);
-  removeByIndex(node1, len - 1);
-  printLinkedList(node1);
-
-  return 0;
-}
-
-
