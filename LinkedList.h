@@ -3,6 +3,7 @@ typedef struct Node{
   struct Node *nextNode;
 } Node;
 
+Node* createLinkedList(int values[], int length);
 void add(Node *head, int value);
 Node* pop(Node *head);
 Node* removeByIndex(Node *head, int index);
