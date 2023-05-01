@@ -18,6 +18,10 @@ Graph *createGraph(int vertices, bool isUndirected) {
 }
 
 void addEdge(Graph *graph, int source, int destination) {
+  if (source > graph->vertices || destination > graph->vertices){
+    printf("SOURCE OR DESTINATION GIVEN EXCEEDS THE NUMBER OF VERTICES");
+  }
+
   if (graph->isUndirected) {
     // from source to destination
     if (graph->array[source].value == -1) {
@@ -42,7 +46,7 @@ void addEdge(Graph *graph, int source, int destination) {
 }
 
 void printGraph(Graph *graph) {
-  for (int i = 0; i < graph->vertices - 1; i++) {
+  for (int i = 0; i < graph->vertices; i++) {
     printf("Adjencency list of vertex %d\n", i);
     printLinkedList(&graph->array[i]);
     printf("\n");
